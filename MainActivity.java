@@ -34,6 +34,14 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private ImageButton mHistory;
     private TextView mCounter;
     private ImageButton mComment;
+    private RelativeLayout mRelative;
+    private int mMood;
+
+    public static int moodValue = 2;
+
+
+
+
 
 
     private GestureDetector mGestureDetector;
@@ -53,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         mCounter = (TextView) findViewById(R.id.counter);
         mHistory = (ImageButton) findViewById(R.id.history);
         mComment = (ImageButton) findViewById(R.id.comment);
+        mRelative = (RelativeLayout) findViewById(R.id.relative);
 
 
         //mHistory.setOnTouchListener(this);
@@ -168,17 +177,101 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             if (DeltaY > 0) {
                 Log.d(TAG, "OnFling: up");
                 mCounter.setText("up");
+                moodValue = ++moodValue;
+                if (moodValue >= 4){
+                    moodValue = 4;
+                }
+                mMood = moodValue;
+                System.out.println(mMood);
+                onUpSwipe();
+                swipeCase();
+
+
                 return true;
 
             } else {
                 Log.d(TAG, "OnFling: down");
                 mCounter.setText("down");
+                moodValue = --moodValue;
+                if (moodValue <= 0){
+                    moodValue = 0;
+                }
+                mMood = moodValue;
+                System.out.println(mMood);
+                onDownSwipe();
+                swipeCase();
+
                 return true;
             }
         }
 
 
         return false;
+    }
+
+    private void onUpSwipe() {
+
+        mCounter.setText("UpSwipe");
+        if (moodValue == 4 ){
+            Toast.makeText(this, "You cannot be more Happy than That !", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+    }
+
+    private void onDownSwipe() {
+        mCounter.setText("UpDown");
+        if (moodValue == 0 ){
+            Toast.makeText(this, "You cannot be more Disappointed !", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+    }
+
+    public void swipeCase(){
+
+
+
+        switch (moodValue){
+
+            case 0: //Smiley Sad
+                mRelative.setBackgroundResource(R.color.color_sad);
+                mHistory.setBackgroundResource(R.color.color_sad);
+                mComment.setBackgroundResource(R.color.color_sad);
+                mWelcomeSmiley.setImageResource(R.drawable.smiley_sad);
+                break;
+
+            case 1: //Smiley Disappointed
+                mRelative.setBackgroundResource(R.color.color_disappointed);
+                mHistory.setBackgroundResource(R.color.color_disappointed);
+                mComment.setBackgroundResource(R.color.color_disappointed);
+                mWelcomeSmiley.setImageResource(R.drawable.smiley_disappointed);
+                break;
+
+            case 2: //Smiley Normal
+                mRelative.setBackgroundResource(R.color.color_normal);
+                mHistory.setBackgroundResource(R.color.color_normal);
+                mComment.setBackgroundResource(R.color.color_normal);
+                mWelcomeSmiley.setImageResource(R.drawable.smiley_normal);
+                break;
+
+            case 3: //Smiley Happy
+                mRelative.setBackgroundResource(R.color.color_happy);
+                mHistory.setBackgroundResource(R.color.color_happy);
+                mComment.setBackgroundResource(R.color.color_happy);
+                mWelcomeSmiley.setImageResource(R.drawable.smiley_happy);
+                break;
+
+            case 4: //Smiley Super_Happy
+                mRelative.setBackgroundResource(R.color.color_super_happy);
+                mHistory.setBackgroundResource(R.color.color_super_happy);
+                mComment.setBackgroundResource(R.color.color_super_happy);
+                mWelcomeSmiley.setImageResource(R.drawable.smiley_super_happy);
+                break;
+
+
+        }
+
     }
 
     // @Override
