@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private RelativeLayout mRelative;
     private int mMood;
 
-    public static int moodValue = 2;
+    public static int moodValue = 3;
 
 
 
@@ -57,11 +57,11 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         // gestureDetector = new SwipeGestureDetector(this);
 
 
-        mWelcomeSmiley = (ImageView) findViewById(R.id.welcome_smiley);
-        mCounter = (TextView) findViewById(R.id.counter);
-        mHistory = (ImageButton) findViewById(R.id.history);
-        mComment = (ImageButton) findViewById(R.id.comment);
-        mRelative = (RelativeLayout) findViewById(R.id.relative);
+        mWelcomeSmiley = findViewById(R.id.welcome_smiley);
+        mCounter = findViewById(R.id.counter);
+        mHistory = findViewById(R.id.history);
+        mComment = findViewById(R.id.comment);
+        mRelative = findViewById(R.id.relative);
 
 
         //mHistory.setOnTouchListener(this);
@@ -236,36 +236,36 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
             case 0: //Smiley Sad
                 mRelative.setBackgroundResource(R.color.color_sad);
-                mHistory.setBackgroundResource(R.color.color_sad);
-                mComment.setBackgroundResource(R.color.color_sad);
+                mHistory.setBackgroundResource(R.color.color_transparent);
+                mComment.setBackgroundResource(R.color.color_transparent);
                 mWelcomeSmiley.setImageResource(R.drawable.smiley_sad);
                 break;
 
             case 1: //Smiley Disappointed
                 mRelative.setBackgroundResource(R.color.color_disappointed);
-                mHistory.setBackgroundResource(R.color.color_disappointed);
-                mComment.setBackgroundResource(R.color.color_disappointed);
+                mHistory.setBackgroundResource(R.color.color_transparent);
+                mComment.setBackgroundResource(R.color.color_transparent);
                 mWelcomeSmiley.setImageResource(R.drawable.smiley_disappointed);
                 break;
 
             case 2: //Smiley Normal
                 mRelative.setBackgroundResource(R.color.color_normal);
-                mHistory.setBackgroundResource(R.color.color_normal);
-                mComment.setBackgroundResource(R.color.color_normal);
+                mHistory.setBackgroundResource(R.color.color_transparent);
+                mComment.setBackgroundResource(R.color.color_transparent);
                 mWelcomeSmiley.setImageResource(R.drawable.smiley_normal);
                 break;
 
             case 3: //Smiley Happy
                 mRelative.setBackgroundResource(R.color.color_happy);
-                mHistory.setBackgroundResource(R.color.color_happy);
-                mComment.setBackgroundResource(R.color.color_happy);
+                mHistory.setBackgroundResource(R.color.color_transparent);
+                mComment.setBackgroundResource(R.color.color_transparent);
                 mWelcomeSmiley.setImageResource(R.drawable.smiley_happy);
                 break;
 
             case 4: //Smiley Super_Happy
                 mRelative.setBackgroundResource(R.color.color_super_happy);
-                mHistory.setBackgroundResource(R.color.color_super_happy);
-                mComment.setBackgroundResource(R.color.color_super_happy);
+                mHistory.setBackgroundResource(R.color.color_transparent);
+                mComment.setBackgroundResource(R.color.color_transparent);
                 mWelcomeSmiley.setImageResource(R.drawable.smiley_super_happy);
                 break;
 
