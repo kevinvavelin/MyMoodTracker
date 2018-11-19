@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    android:background="@color/color_happy"
     android:orientation="vertical"
-    android:background="@color/light_sage"
+    tools:context=".MainActivity"
 
     >
 
@@ -15,40 +15,39 @@
         android:id="@+id/welcome_smiley"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:scaleType="center"
         android:src="@drawable/smiley_happy"
-        android:layout_weight="1"/>
-
+        />
 
 
     <ImageButton
         android:id="@+id/comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_note_add_black"
-        android:scaleType="center"
-        android:background="@color/light_sage"
         android:layout_alignBottom="@id/welcome_smiley"
+        android:background="@color/color_transparent"
         android:padding="16dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_note_add_black"
 
 
-                />
+        />
+
     <ImageButton
         android:id="@+id/history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_history_black"
-        android:padding="16dp"
-        android:layout_alignParentRight="true"
         android:layout_alignBottom="@id/welcome_smiley"
-        android:background="@color/light_sage"
-        />
+        android:layout_alignParentRight="true"
+        android:background="@color/color_transparent"
+        android:padding="16dp"
+        android:src="@drawable/ic_history_black" />
 
-        <TextView
-            android:id="@+id/counter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="c'est ici"
-            />
+    <TextView
+        android:id="@+id/counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="c'est ici" />
 
 </RelativeLayout>
