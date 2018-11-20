@@ -13,6 +13,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private TextView mMoodValueForTest;
     private DatabaseManager databaseManager;
+    private TextView commentForTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,16 +21,25 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
 
         mMoodValueForTest = findViewById(R.id.moodValueForText);
-        databaseManager = new DatabaseManager( this );
+        commentForTest = findViewById(R.id.commentForTest);
+
+        databaseManager = new DatabaseManager(this);
 
 
         databaseManager.insertMood(moodValue, (int) new Date().getTime());
         // mMoodValueForTest.setText(" a voir " + String.valueOf(moodValue));
 
         List<MoodData> moodDataList = databaseManager.readTop7();
-        for (MoodData moodData  : moodDataList){
+        for (MoodData moodData : moodDataList) {
             mMoodValueForTest.append(moodData.toString() + "\n");
         }
+
+        List<CommentData> commentDataList = databaseManager.commentTop7();
+        for (CommentData commentData : commentDataList) {
+            commentForTest.append(commentData.toString() + "\n");
+        }
+
         databaseManager.close();
     }
 }
+

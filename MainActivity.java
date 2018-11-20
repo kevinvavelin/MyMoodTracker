@@ -23,6 +23,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.Toast;
 
+
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener {
 
 
@@ -36,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private ImageButton mComment;
     private RelativeLayout mRelative;
     private int mMood;
+    private TextView mCommentForTest;
+    private DatabaseManager databaseManager;
 
     public static int moodValue = 3;
 
@@ -62,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         mHistory = findViewById(R.id.history);
         mComment = findViewById(R.id.comment);
         mRelative = findViewById(R.id.relative);
+
+        //Findview for test
+        mCommentForTest = findViewById(R.id.commentForTest);
 
 
         //mHistory.setOnTouchListener(this);
@@ -97,6 +105,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
         });
 
+        databaseManager = new DatabaseManager(this);
+
+
         // CLIC SUR COMMENT - OPENS ALERT DIALOG - UserImputValue is the Input ( To see how to store it)
         mComment.setOnClickListener(new View.OnClickListener() {
 
@@ -107,11 +118,14 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 inputAlert.setMessage("entrez votre commentaire et cliquez sur valider");
                 final EditText userInput = new EditText(context);
                 inputAlert.setView(userInput);
+
                 inputAlert.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String userInputValue = userInput.getText().toString();
                         //System.out.println(userInputValue);
+                        databaseManager.insertComment( userInputValue, (int) new Date().getTime());
+                        Log.i("DATABASE", "insertCommand invoked");
                     }
                 });
                 inputAlert.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
