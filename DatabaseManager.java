@@ -8,15 +8,17 @@ import android.util.Log;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Locale;
 
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "myHistorrr.db";
+    private static final String DATABASE_NAME = "mmmmodcomment.db";
     private static final int DATABASE_VERSION = 1;
 
 
@@ -29,24 +31,31 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String strSql = "create table T_mood ("
-                + "  idMood integer primary key autoincrement,"
-                + "  mood integer not null,"
-                + "  when_ integer not null"
-                + ")";
+//        String strSql = "create table T_mood ("
+//                + "  idMood integer primary key autoincrement,"
+//                + "  mood integer not null,"
+//                + "  when_ integer not null"
+//                + ")";
+//
+//
+//        String strSqlComment = "create table T_comment ("
+//                + "  idComment integer primary key autoincrement,"
+//                + "  comment text not null,"
+//                + "  when_ integer not null"
+//                + ")";
+//
+//        db.execSQL(strSql);
+//        Log.i("DATABASE", "OnCreate invoked");
+//        db.execSQL(strSqlComment);
+//        Log.i("DATABASE", "OnCreateT_Comment invoked");
 
-
-        String strSqlComment = "create table T_comment ("
-                + "  idComment integer primary key autoincrement,"
-                + "  comment text not null,"
-                + "  when_ integer not null"
-                + ")";
-
+        String strSql = "CREATE TABLE T_mood ("
+                + "   _id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "   mood INTEGER NOT NULL,"
+                + "   comment TEXT  ,"
+                + "   when_ INTEGER NOT NULL"
+                +")";
         db.execSQL(strSql);
-        Log.i("DATABASE", "OnCreate invoked");
-        db.execSQL(strSqlComment);
-        Log.i("DATABASE", "OnCreateT_Comment invoked");
-
     }
 
     @Override
@@ -57,16 +66,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
         this.onCreate(db);
         Log.i("DATABASE", "OnUpgrade invoked");
 
-        String strSqlComment = "drop table if exists T_comment";
-        db.execSQL( strSqlComment);
-        this.onCreate(db);
-        Log.i("DATABASE", "OnUpgradeT_Comment invoked");
+//        String strSqlComment = "drop table if exists T_comment";
+//        db.execSQL( strSqlComment);
+//        this.onCreate(db);
+//        Log.i("DATABASE", "OnUpgradeT_Comment invoked");
 
     }
 
-    public void insertMood(int mood, int when_) {
-        String strSql = "insert into T_mood (mood, when_) values ("
-                + mood + "," + new Date().getTime() + ")";
+    public void insertMood(int mood, String comment, int when_) {
+
+
+        //comment = comment.replace("'", "''");
+        String strSql = "insert into T_mood (mood, comment, when_) values ("
+                + mood + ",'" + comment + "'," + new Date().getTime() + ")";
 
         this.getWritableDatabase().execSQL(strSql);
         Log.i("DATABASE", "insertMood invoked");
@@ -76,11 +88,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
         List<MoodData> moodDataList = new ArrayList<>();
 
         //1ere technique
-        String strSql = "select * from T_mood order by when_ Desc limit 7";
+        //String strSql = "select * from T_mood order by when_ Desc limit 7";
+
+        String strSql = "select distinct _id, mood, comment, when_ FROM T_mood order by when_ desc limit 7";
+
         Cursor cursor = this.getReadableDatabase().rawQuery(strSql, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            MoodData moodData = new MoodData(cursor.getInt(0), cursor.getInt(1), new Date(cursor.getLong(2)));
+            MoodData moodData = new MoodData (cursor.getInt(0),cursor.getInt(1), cursor.getString(2), new Date(cursor.getLong(3)));
             moodDataList.add(moodData);
             cursor.moveToNext();
         }
@@ -90,33 +105,34 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     }
 
-    public void insertComment(String comment, int when_) {
-        comment = comment.replace("'", "''");
-       String strSqlComment = "insert into T_comment ( comment , when_) values ('"
-               + comment + "', " + new Date().getTime() + ")";
+//    public void insertComment(String comment, int when_) {
+//        comment = comment.replace("'", "''");
+//        String strSqlComment = "insert into T_comment ( comment , when_) values ('"
+//                + comment + "', " + new Date().getTime() + ")";
+//
+//
+//        this.getWritableDatabase().execSQL(strSqlComment);
+//        Log.i("DATABASE", "insertCommand invoked");
+//
+//    }
+//
+//    public List<CommentData> commentTop7() {
+//        List<CommentData> commentDataList = new ArrayList<>();
+//
+//        //1ere technique
+//        String strSqlComment = "select * from T_comment order by when_ desc limit 7";
+//        Cursor cursor = this.getReadableDatabase().rawQuery(strSqlComment, null);
+//        cursor.moveToFirst();
+//        while (!cursor.isAfterLast()) {
+//            CommentData commentData = new CommentData(cursor.getInt(0), cursor.getString(1), new Date(cursor.getLong(2)));
+//            commentDataList.add(commentData);
+//            cursor.moveToNext();
+//        }
+//        cursor.close();
+//
+//        return commentDataList;
+//
+//    }
 
-
-        this.getWritableDatabase().execSQL(strSqlComment);
-        Log.i("DATABASE", "insertCommand invoked");
-
-    }
-
-    public List<CommentData> commentTop7() {
-        List<CommentData> commentDataList = new ArrayList<>();
-
-        //1ere technique
-        String strSqlComment = "select * from T_comment order by when_ desc limit 7";
-        Cursor cursor = this.getReadableDatabase().rawQuery(strSqlComment, null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            CommentData commentData = new CommentData(cursor.getInt(0), cursor.getString(1), new Date(cursor.getLong(2)));
-            commentDataList.add(commentData);
-            cursor.moveToNext();
-        }
-        cursor.close();
-
-        return commentDataList;
-
-    }
 
 }

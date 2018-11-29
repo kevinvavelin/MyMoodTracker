@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.widget.Toast;
 
 
+
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener {
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private TextView mCommentForTest;
     private DatabaseManager databaseManager;
 
+    public static String userInputValue;
+    public static String comment;
     public static int moodValue = 3;
 
 
@@ -122,9 +125,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 inputAlert.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String userInputValue = userInput.getText().toString();
+                        String userInputValue = userInput.getText().toString().trim();
                         //System.out.println(userInputValue);
-                        databaseManager.insertComment( userInputValue, (int) new Date().getTime());
+                        databaseManager.insertMood (moodValue, userInputValue, (int) new Date().getTime());
                         Log.i("DATABASE", "insertCommand invoked");
                     }
                 });

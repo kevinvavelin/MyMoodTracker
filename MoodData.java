@@ -7,11 +7,21 @@ public class MoodData {
     private int idMood;
     private int mood;
     private Date when;
+    private String comment;
 
-    public MoodData(int idMood, int mood, Date when) {
+    public MoodData(int idMood, int mood, String comment, Date when) {
         this.setIdMood(idMood);
         this.setMood(mood);
         this.setWhen(when);
+        this.setComment(comment);
+    }
+
+    private void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
     public int getIdMood() {
@@ -41,6 +51,7 @@ public class MoodData {
 
     @Override
     public String toString() {
-        return idMood + " : " + mood + " at " +  when.toString();
+
+        return idMood + " : " + mood + " : " + comment + " : " + when ;
     }
 }
