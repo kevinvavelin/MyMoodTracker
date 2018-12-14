@@ -1,26 +1,28 @@
 package com.example.android.moodtracker;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import org.w3c.dom.Text;
-
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+import java.util.function.ToDoubleBiFunction;
+
+import static com.example.android.moodtracker.MainActivity.comment;
+import static com.example.android.moodtracker.MainActivity.moodValue;
+import static com.example.android.moodtracker.MainActivity.userInputValue;
 
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "mmmmodcomment.db";
+    private static final String DATABASE_NAME = "lescommentaires.db";
     private static final int DATABASE_VERSION = 1;
-
 
 
     public DatabaseManager(Context context) {
@@ -49,12 +51,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
 //        db.execSQL(strSqlComment);
 //        Log.i("DATABASE", "OnCreateT_Comment invoked");
 
+
         String strSql = "CREATE TABLE T_mood ("
-                + "   _id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "   id_ INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "   mood INTEGER NOT NULL,"
-                + "   comment TEXT  ,"
-                + "   when_ INTEGER NOT NULL"
-                +")";
+                + "   comment TEXT ,"
+                + "   when_ TEXT NOT NULL"
+                + ")";
         db.execSQL(strSql);
     }
 
@@ -62,40 +65,97 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         String strSql = "drop table if exists T_mood";
-        db.execSQL( strSql);
+        db.execSQL(strSql);
         this.onCreate(db);
         Log.i("DATABASE", "OnUpgrade invoked");
 
-//        String strSqlComment = "drop table if exists T_comment";
-//        db.execSQL( strSqlComment);
-//        this.onCreate(db);
-//        Log.i("DATABASE", "OnUpgradeT_Comment invoked");
-
     }
 
-    public void insertMood(int mood, String comment, int when_) {
+    public void insertMood(int moodValue, String userInputValue, String today) {
+
+        String pattern = "dd-MM-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        today = simpleDateFormat.format(new Date());
+        String todayIsToday = todayIsToday();
 
 
-        //comment = comment.replace("'", "''");
-        String strSql = "insert into T_mood (mood, comment, when_) values ("
-                + mood + ",'" + comment + "'," + new Date().getTime() + ")";
+        boolean result;
 
-        this.getWritableDatabase().execSQL(strSql);
-        Log.i("DATABASE", "insertMood invoked");
-    }
+        if (result = today.equals(todayIsToday)) {
+            // # Todo
+
+            //String strSql = "DELETE FROM T_mood WHERE when_ = when_ OR when_  ";
+//            String strSql = "UPDATE T_mood SET mood = mood, comment = comment WHERE when_ = when_";
+//            this.getWritableDatabase().execSQL(strSql);
+                //UPDATE ROW
+//                SQLiteDatabase db = this.getWritableDatabase();
+//                ContentValues contentValues = new ContentValues();
+//                contentValues.put("mood", mood );
+//                contentValues.put("comment", comment);
+//                db.update("T_mood", contentValues, "when_ = 'today'", null );
+//                db.close();
+
+
+               updateRow(moodValue, userInputValue, today);
+
+//            // #Todo
+//            String strSql = "insert into T_mood (mood, comment, when_) values ("
+//                    + mood + ",'" + comment + "','" + simpleDateFormat.format(new Date()) + "')";
+//
+//            this.getWritableDatabase().execSQL(strSql);
+//            Log.i("DATABASE", "insertMood invoked");
+
+        } else {
+            // #Todo
+            String strSql = "insert into T_mood (mood, comment, when_) values ("
+                    + moodValue + ",'" + userInputValue + "','" + simpleDateFormat.format(new Date()) + "')";
+
+            this.getWritableDatabase().execSQL(strSql);
+            Log.i("DATABASE", "insertMood invoked");
+        }
+
+
+
+//        boolean result;
+//        if (result = today.equals(today)) {
+//
+//            //String strSql = "UPDATE T_mood SET mood = mood, comment = 'comment' VALUES (" + mood + ",'" + comment + "')";
+//            String strSql = "UPDATE T_mood SET mood = mood, comment = 'comment' WHERE _id=when_);
+//            Cursor cursor = this.getWritableDatabase().rawQuery(strSql, null);
+//            cursor.moveToFirst();
+//            cursor.close();
+//        } else {
+
+//        //comment = comment.replace("'", "''");
+//        String strSql = "insert into T_mood (mood, comment, when_) values ("
+//                + mood + ",'" + comment + "','" + simpleDateFormat.format(new Date()) + "')";
+//
+//        this.getWritableDatabase().execSQL(strSql);
+//        Log.i("DATABASE", "insertMood invoked");
+//    }
+
+
+//    private void updateMood(String mood, String new_Mood) {
+//
+//
+ }
+
+
 
     public List<MoodData> readTop7() {
         List<MoodData> moodDataList = new ArrayList<>();
 
-        //1ere technique
-        //String strSql = "select * from T_mood order by when_ Desc limit 7";
+        //Request SQL
+        String strSql = "select * from T_mood order by _id desc limit 7";
 
-        String strSql = "select distinct _id, mood, comment, when_ FROM T_mood order by when_ desc limit 7";
 
-        Cursor cursor = this.getReadableDatabase().rawQuery(strSql, null);
+        Cursor cursor = this.getReadableDatabase().rawQuery( strSql, null);
+        //Cursor cursor = this.getReadableDatabase().query("T_mood", new String[]{"_id", "mood", "comment", "when_"}, null, null, null, null, "when_ desc", "7");
         cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            MoodData moodData = new MoodData (cursor.getInt(0),cursor.getInt(1), cursor.getString(2), new Date(cursor.getLong(3)));
+        while ( ! cursor.isAfterLast()) {
+            // MoodData moodData = new MoodData (cursor.getString(0));
+            MoodData moodData = new MoodData(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3));
             moodDataList.add(moodData);
             cursor.moveToNext();
         }
@@ -105,34 +165,33 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     }
 
-//    public void insertComment(String comment, int when_) {
-//        comment = comment.replace("'", "''");
-//        String strSqlComment = "insert into T_comment ( comment , when_) values ('"
-//                + comment + "', " + new Date().getTime() + ")";
-//
-//
-//        this.getWritableDatabase().execSQL(strSqlComment);
-//        Log.i("DATABASE", "insertCommand invoked");
-//
-//    }
-//
-//    public List<CommentData> commentTop7() {
-//        List<CommentData> commentDataList = new ArrayList<>();
-//
-//        //1ere technique
-//        String strSqlComment = "select * from T_comment order by when_ desc limit 7";
-//        Cursor cursor = this.getReadableDatabase().rawQuery(strSqlComment, null);
-//        cursor.moveToFirst();
-//        while (!cursor.isAfterLast()) {
-//            CommentData commentData = new CommentData(cursor.getInt(0), cursor.getString(1), new Date(cursor.getLong(2)));
-//            commentDataList.add(commentData);
-//            cursor.moveToNext();
-//        }
-//        cursor.close();
-//
-//        return commentDataList;
-//
-//    }
+    public String todayIsToday() {
+        String todayIsToday = "SELECT when_ FROM T_mood order by _id desc limit 1";
+
+
+        Cursor cursor = this.getReadableDatabase().rawQuery(todayIsToday, null);
+        cursor.moveToFirst();
+        String dateAlreadyExists = null;
+        while (!cursor.isAfterLast()) {
+            dateAlreadyExists = cursor.getString(0);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        todayIsToday = dateAlreadyExists;
+
+        return todayIsToday;
+    }
+
+    public boolean updateRow(int moodValue, String userInputValue, String today) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("mood", moodValue );
+        contentValues.put("comment", userInputValue);
+        db.update("T_mood", contentValues, "when_ = '" + today + "'", null);
+
+        return true;
+    }
 
 
 }

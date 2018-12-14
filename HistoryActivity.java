@@ -6,11 +6,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import static com.example.android.moodtracker.MainActivity.moodValue;
-import static com.example.android.moodtracker.MainActivity.userInputValue;
+import static com.example.android.moodtracker.MainActivity.comment;
 
 public class HistoryActivity extends AppCompatActivity {
 
@@ -18,6 +19,11 @@ public class HistoryActivity extends AppCompatActivity {
     private DatabaseManager databaseManager;
     private TextView commentForTest;
     private String userInputValue;
+
+    String pattern = "dd-MM-yyyy";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,27 +37,30 @@ public class HistoryActivity extends AppCompatActivity {
         rv.setAdapter(new Myadapter());
 
 
+
+
         mMoodValueForTest = findViewById(R.id.moodValueForText);
         commentForTest = findViewById(R.id.commentForTest);
 
         databaseManager = new DatabaseManager(this);
 
 
-        databaseManager.insertMood(moodValue, userInputValue, (int) new Date().getTime());
-        // mMoodValueForTest.setText(" a voir " + String.valueOf(moodValue));
+
+
+//        databaseManager.insertMood(moodValue, userInputValue, simpleDateFormat.format(new Date()));
+//        // mMoodValueForTest.setText(" a voir " + String.valueOf(moodValue));
+//
+
 
         List<MoodData> moodDataList = databaseManager.readTop7();
         for (MoodData moodData : moodDataList) {
             mMoodValueForTest.append(moodData.toString() + "\n");
         }
 
-//        List<CommentData> commentDataList = databaseManager.commentTop7();
-//        for (CommentData commentData : commentDataList) {
-//            commentForTest.append(commentData.toString() + "\n");
-//        }
+//
 
         databaseManager.close();
-    }
+  }
 
 
 }

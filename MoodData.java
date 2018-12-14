@@ -1,35 +1,34 @@
 package com.example.android.moodtracker;
 
-import java.util.Date;
 
 public class MoodData {
 
-    private int idMood;
+    private int id_;
     private int mood;
-    private Date when;
     private String comment;
+    private String when_;
 
-    public MoodData(int idMood, int mood, String comment, Date when) {
-        this.setIdMood(idMood);
+    public MoodData(int id_, int mood, String comment, String when_) {
+        this.setId_(id_);
         this.setMood(mood);
-        this.setWhen(when);
         this.setComment(comment);
-    }
-
-    private void setComment(String comment) {
-        this.comment = comment;
+        this.setWhen_(when_);
     }
 
     public String getComment() {
         return comment;
     }
 
-    public int getIdMood() {
-        return idMood;
+    private void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public void setIdMood(int idMood) {
-        this.idMood = idMood;
+    public int getId_() {
+        return id_;
+    }
+
+    public void setId_(int id_) {
+        this.id_ = id_;
     }
 
     public int getMood() {
@@ -40,18 +39,23 @@ public class MoodData {
         this.mood = mood;
     }
 
-    public Date getWhen() {
-        return when;
+    public String getWhen_() {
+        return when_;
     }
 
-    public void setWhen(Date when) {
-        this.when = when;
+    public void setWhen_(String when_) {
+        this.when_ = when_;
     }
+
+
 
 
     @Override
     public String toString() {
 
-        return idMood + " : " + mood + " : " + comment + " : " + when ;
+        return id_ + " : " + mood + " : " + comment + " : " + when_;
+
+
     }
+
 }
