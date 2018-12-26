@@ -3,48 +3,48 @@ package com.example.android.moodtracker;
 
 public class MoodData {
 
-    private int id_;
-    private int mood;
-    private String comment;
-    private String when_;
+    private int ID_;
+    private int MOOD;
+    private String COMMENT;
+    private String WHEN_;
 
-    public MoodData(int id_, int mood, String comment, String when_) {
-        this.setId_(id_);
-        this.setMood(mood);
-        this.setComment(comment);
-        this.setWhen_(when_);
+    public MoodData(int ID_, int MOOD, String COMMENT, String WHEN_) {
+        this.setId_(ID_);
+        this.setMood(MOOD);
+        this.setComment(COMMENT);
+        this.setWhen_(WHEN_);
     }
 
     public String getComment() {
-        return comment;
+        return COMMENT;
     }
 
     private void setComment(String comment) {
-        this.comment = comment;
+        this.COMMENT = comment;
     }
 
     public int getId_() {
-        return id_;
+        return ID_;
     }
 
     public void setId_(int id_) {
-        this.id_ = id_;
+        this.ID_ = id_;
     }
 
     public int getMood() {
-        return mood;
+        return MOOD;
     }
 
     public void setMood(int mood) {
-        this.mood = mood;
+        this.MOOD = mood;
     }
 
     public String getWhen_() {
-        return when_;
+        return WHEN_;
     }
 
     public void setWhen_(String when_) {
-        this.when_ = when_;
+        this.WHEN_ = when_;
     }
 
 
@@ -53,7 +53,7 @@ public class MoodData {
     @Override
     public String toString() {
 
-        return id_ + " : " + mood + " : " + comment + " : " + when_;
+        return ID_ + " : " + MOOD + " : " + COMMENT + " : " + WHEN_;
 
 
     }

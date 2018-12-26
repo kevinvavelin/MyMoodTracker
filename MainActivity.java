@@ -32,7 +32,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.android.moodtracker.R.layout.activity_history;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener {
 
@@ -86,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
 
         //Findview for test
-        mCommentForTest = (TextView) findViewById(R.id.commentForTest);
-        mMoodValueForTest = findViewById(R.id.moodValueForText);
+//        mCommentForTest = (TextView) findViewById(R.id.commentForTest);
+//        mMoodValueForTest = findViewById(R.id.moodValueForText);
 
         //mHistory.setOnTouchListener(this);
         mGestureDetector = new GestureDetector(this, this);
@@ -113,24 +112,21 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         mHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // compteur = --compteur;
-                // mCounter.setText(Integer.toString(compteur));
-                // mWelcomeSmiley.setImageResource(R.drawable.smiley_sad);
-                //System.out.println(compteur);
+
 
                 String today = simpleDateFormat.format(new Date());
 
 
-                View view = LayoutInflater.from(getApplication()).inflate(R.layout.activity_history, null);
-                mMoodValueForTest =  view.findViewById(R.id.moodValueForText);
+//                View view = LayoutInflater.from(getApplication()).inflate(R.layout.activity_history, null);
+//                mMoodValueForTest =  view.findViewById(R.id.moodValueForText);
 
                 databaseManager.insertMood (moodValue, userInputValue, today);
 
-                List<MoodData> moodDataList = databaseManager.readTop7();
-                for (MoodData moodData : moodDataList) {
-                    mMoodValueForTest.append(moodData.toString() + "\n");
-                }
-                databaseManager.close();
+//                List<MoodData> moodDataList = databaseManager.readTop7();
+//                for (MoodData moodData : moodDataList) {
+//                    mMoodValueForTest.append(moodData.toString() + "\n");
+//                }
+//                databaseManager.close();
 
 
                 Intent historyActivityIntent = new Intent(MainActivity.this, HistoryActivity.class);
@@ -150,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             @Override
             public void onClick(View v) {
 
-                mMoodValueForTest = findViewById(R.id.moodValueForText);
+ //               mMoodValueForTest = findViewById(R.id.moodValueForText);
 
 
                 final AlertDialog.Builder inputAlert = new AlertDialog.Builder(context);
@@ -167,16 +163,17 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                         String today = simpleDateFormat.format(new Date());
 
 
-                        View view = LayoutInflater.from(getApplication()).inflate(R.layout.activity_history, null);
-                        mMoodValueForTest =  view.findViewById(R.id.moodValueForText);
+//                        View view = LayoutInflater.from(getApplication()).inflate(R.layout.activity_history, null);
+//                        mMoodValueForTest =  view.findViewById(R.id.moodValueForText);
 
                        databaseManager.insertMood (moodValue, userInputValue, today);
 
-                        List<MoodData> moodDataList = databaseManager.readTop7();
-                        for (MoodData moodData : moodDataList) {
-                            mMoodValueForTest.append(moodData.toString() + "\n");
-                        }
-                        databaseManager.close();
+//                        List<MoodData> moodDataList = databaseManager.readTop7();
+//                        for (MoodData moodData : moodDataList) {
+//                            mMoodValueForTest.append(moodData.toString() + "\n");
+
+//                        }
+//                        databaseManager.close();
 
                      Intent historyActivityIntent = new Intent(MainActivity.this, HistoryActivity.class);
                        startActivity(historyActivityIntent);
@@ -238,8 +235,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         Log.d(TAG, "OnFling: called");
-        //Intent historyActivityIntent = new Intent(MainActivity.this, HistoryActivity.class);
-        //startActivity(historyActivityIntent);
 
         float DeltaY = e2.getY() - e1.getY();
 
@@ -333,15 +328,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         }
 
     }
-
-    // @Override
-    // public boolean dispatchTouchEvent(MotionEvent event) {
-    //    return gestureDetector.onTouchEvent(event);
-    //  }
-
-    //public void onSwipe(SwipeGestureDetector.SwipeDirection TOP_TO_BOTTOM) {
-    //   System.out.println("droite gauche");
-    // }
 
 
 }
