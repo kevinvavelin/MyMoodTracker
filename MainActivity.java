@@ -1,36 +1,25 @@
 package com.example.android.moodtracker;
 
-import android.app.usage.UsageEvents;
-import android.content.Intent;
-import android.nfc.Tag;
-import android.support.design.widget.NavigationView;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
-
-
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener {
@@ -61,12 +50,16 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     String pattern = "dd-MM-yyyy";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
+      private MediaPlayer mMediaPlayer;
+   // public final MediaPlayer sound = MediaPlayer.create(this, R.raw.beep);
 
 
 
     private GestureDetector mGestureDetector;
 
     private Context context = this;
+
+
 
 
     @Override
@@ -82,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         mHistory = findViewById(R.id.history);
         mComment = findViewById(R.id.comment);
         mRelative = findViewById(R.id.relative);
+
+
 
 
         //Findview for test
@@ -252,6 +247,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 swipeCase();
 
 
+
+
                 return true;
 
             } else {
@@ -266,12 +263,20 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 onDownSwipe();
                 swipeCase();
 
+
                 return true;
             }
         }
 
 
         return false;
+    }
+
+    private void playMedia() {
+
+         MediaPlayer mMediaPlayer = MediaPlayer.create(this, R.raw.beep);
+            mMediaPlayer.start();
+
     }
 
     private void onUpSwipe() {
@@ -302,26 +307,31 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             case 0: //Smiley Sad
                 mRelative.setBackgroundResource(R.color.color_sad);
                 mWelcomeSmiley.setImageResource(R.drawable.smiley_sad);
+                playMedia();
                 break;
 
             case 1: //Smiley Disappointed
                 mRelative.setBackgroundResource(R.color.color_disappointed);
                 mWelcomeSmiley.setImageResource(R.drawable.smiley_disappointed);
+                playMedia();
                 break;
 
             case 2: //Smiley Normal
                 mRelative.setBackgroundResource(R.color.color_normal);
                 mWelcomeSmiley.setImageResource(R.drawable.smiley_normal);
+                playMedia();
                 break;
 
             case 3: //Smiley Happy
                 mRelative.setBackgroundResource(R.color.color_happy);
                 mWelcomeSmiley.setImageResource(R.drawable.smiley_happy);
+                playMedia();
                 break;
 
             case 4: //Smiley Super_Happy
                 mRelative.setBackgroundResource(R.color.color_super_happy);
                 mWelcomeSmiley.setImageResource(R.drawable.smiley_super_happy);
+                playMedia();
                 break;
 
 
