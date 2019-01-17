@@ -7,16 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.function.ToDoubleBiFunction;
-
-import static com.example.android.moodtracker.MainActivity.comment;
-import static com.example.android.moodtracker.MainActivity.moodValue;
-import static com.example.android.moodtracker.MainActivity.userInputValue;
 
 
 public class DatabaseManager extends SQLiteOpenHelper {
@@ -28,6 +22,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public static final String COMMENT = "comment";
     public static final String MOOD = "mood";
+
+
 
 
 
@@ -108,7 +104,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
  }
 
 
-        // Method List called readTop7, allows to get a list with the 7 latest data savec
+        // Method List called readTop7, allows to get a list with the 7 latest data saved
     public List<MoodData> readTop7() {
         List<MoodData> moodDataList = new ArrayList<>();
 
@@ -173,11 +169,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public Cursor getMoodComment(){
 
-       Cursor c = this.getReadableDatabase().query( "T_mood", new String[]{"_id", "mood","comment"}, null, null, null, null, null );
+       Cursor c = this.getReadableDatabase().query( "T_mood", new String[]{"_id", "mood","comment"}, null, null, null, null, "_id" + " DESC" , "7" );
         if (c != null) {
             c.moveToFirst();
         }
-
 
         return c;
     }
