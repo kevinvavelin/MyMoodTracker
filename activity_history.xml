@@ -5,27 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HistoryActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="7">
 
 
-    <TextView
-        android:id="@+id/moodValueForText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="test"
-        />
 
-    <TextView
-        android:id="@+id/commentForTest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Comment for test"
-        />
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/display_listview"
+        android:layout_weight="1"
         >
 
 
