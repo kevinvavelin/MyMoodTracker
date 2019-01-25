@@ -4,8 +4,8 @@ package com.example.android.moodtracker;
 public class MoodData {
 
     private int ID_;
-    private int MOOD;
-    private String COMMENT;
+    public int MOOD;
+    public String COMMENT;
     private String WHEN_;
 
     public MoodData(int ID_, int MOOD, String COMMENT, String WHEN_) {
