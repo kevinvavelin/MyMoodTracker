@@ -59,6 +59,7 @@ public final class MoodHistoryAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.list_items_row, parent, false);
             TextView numberOfTheDay = view.findViewById(R.id.numberOfTheDay);
             ImageButton commentIcon = view.findViewById(R.id.commentIcon);
+            //LinearLayout text_container = view.findViewById(R.id.text_container);
             // switch (moodDataList.get(position)) {
             switch (this.listOfMoodData.get(position).MOOD) {
                 //   case 0: //Smiley Sad
@@ -121,7 +122,7 @@ public final class MoodHistoryAdapter extends BaseAdapter {
            commentIcon.setVisibility(View.VISIBLE);
        }
        else {
-           commentIcon.setVisibility(View.GONE);
+           commentIcon.setVisibility(View.INVISIBLE);
        }
     }
 
