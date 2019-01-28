@@ -109,9 +109,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
         List<MoodData> moodDataList = new ArrayList<>();
 
         //Request SQL
-            String strSql = "select * from T_mood order by _id desc limit 7";
+         //   String strSql = "select * from T_mood order by _id desc limit 7";
+         //   String strSql = "select * from T_mood order by _id desc limit 7 offset 1";
 
-            // Creation of a Cursor called cursor. It will read in the database according to the SQL request strSql - rawquery
+        //  String strSql = "select * from (select * from T_mood order by _id desc limit 7 offset 1) as strSql order by _id asc";
+        String strSql = "select * from (select * from T_mood order by _id desc limit 7) as strSql order by _id asc";
+
+
+        // Creation of a Cursor called cursor. It will read in the database according to the SQL request strSql - rawquery
             Cursor cursor = this.getReadableDatabase().rawQuery( strSql, null);
             // Put the cursor at before the first line first row
             cursor.moveToFirst();
