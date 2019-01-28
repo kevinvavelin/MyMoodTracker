@@ -6,7 +6,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:minHeight="79dp"
+    android:minHeight="80dp"
     android:background="@color/color_normal"
     >
 
@@ -15,7 +15,7 @@
     <LinearLayout
         android:id="@+id/text_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         >
 
@@ -38,7 +38,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_comment_black_48px"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center_vertical"
+            android:paddingRight="10dp"
+            android:background="@color/color_transparent"
+            />
     </LinearLayout>
 
 
