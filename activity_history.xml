@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".HistoryActivity"
     android:orientation="vertical"
-    android:weightSum="7">
+    android:weightSum="7"
+    android:background="@color/Background_color">
 
 
 
@@ -16,6 +17,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/display_listview"
         android:layout_weight="1"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+
         >
 
 
