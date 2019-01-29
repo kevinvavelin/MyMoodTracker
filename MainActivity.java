@@ -109,13 +109,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             public void onClick(View v) {
 
 
-                String today = simpleDateFormat.format(new Date());
+     //           String today = simpleDateFormat.format(new Date());
 
 
 //                View view = LayoutInflater.from(getApplication()).inflate(R.layout.activity_history, null);
 //                mMoodValueForTest =  view.findViewById(R.id.moodValueForText);
 
-                databaseManager.insertMood (moodValue, userInputValue, today);
+ //               databaseManager.insertMood (moodValue, userInputValue, today);
 
 //                List<MoodData> moodDataList = databaseManager.readTop7();
 //                for (MoodData moodData : moodDataList) {
@@ -170,8 +170,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 //                        }
 //                        databaseManager.close();
 
-                     Intent historyActivityIntent = new Intent(MainActivity.this, HistoryActivity.class);
-                       startActivity(historyActivityIntent);
+//                     Intent historyActivityIntent = new Intent(MainActivity.this, HistoryActivity.class);
+//                       startActivity(historyActivityIntent);
 
                           Log.i("DATABASE", "insertCommand invoked");
                     }
@@ -245,6 +245,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 System.out.println(mMood);
                 onUpSwipe();
                 swipeCase();
+                String today = simpleDateFormat.format(new Date());
+                databaseManager.insertMood (moodValue, userInputValue, today);
+
 
 
 
@@ -262,6 +265,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 System.out.println(mMood);
                 onDownSwipe();
                 swipeCase();
+                String today = simpleDateFormat.format(new Date());
+                databaseManager.insertMood (moodValue, userInputValue, today);
 
 
                 return true;
