@@ -22,6 +22,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public static final String COMMENT = "comment";
     public static final String MOOD = "mood";
+    public static final String WHEN_ = "when_";
 
 
 

@@ -2,8 +2,12 @@ package com.example.android.moodtracker;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -20,6 +24,8 @@ public class HistoryActivity extends AppCompatActivity {
     private String userInputValue;
 
 
+
+
 //    static String[][] tableStatic = new String[][]{{ "0", "1", "2", "3", "4"},
 //            {R.layout.sad_layout, R.layout.disappointed_layout, R.layout.normal_layout, R.layout.happy_layout, R.layout.super_happy_layout}};
 
@@ -28,9 +34,8 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        setTitle("Northern' characters");
+        setTitle("History");
         databaseManager = new DatabaseManager(this);
-
 
 
 //        private void moodStatic () {
@@ -160,13 +165,34 @@ public class HistoryActivity extends AppCompatActivity {
 
     }
 
-        private void populateListView () {
-           // Cursor cursor = databaseManager.getMoodComment();
+    private void populateListView() {
+        // Cursor cursor = databaseManager.getMoodComment();
 
-            List<MoodData> moodDataList = databaseManager.readTop7();
-            MoodHistoryAdapter moodHistoryAdapter = new MoodHistoryAdapter(getBaseContext(), moodDataList) ;
-            ListView myList = (ListView) findViewById(R.id.display_listview);
-            myList.setAdapter(moodHistoryAdapter);
+
+
+        final List<MoodData> moodDataList = databaseManager.readTop7();
+        MoodHistoryAdapter moodHistoryAdapter = new MoodHistoryAdapter(getBaseContext(), moodDataList);
+        final ListView myList = findViewById(R.id.display_listview);
+        myList.setAdapter(moodHistoryAdapter);
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Log.i("clic", "click sur Icon " + position + " " +id );
+
+               String iconOrNot = moodDataList.get(position).COMMENT;
+         //       Log.i("datas", "" + iconOrNot );
+               if (iconOrNot != null) {
+                    Toast.makeText(HistoryActivity.this, " " + iconOrNot, Toast.LENGTH_SHORT).show();
+               } else {
+                }
+            }
+        });}
+
+        }
+
+
+
 
 
 //            String[] fromTheDb = new String[]{DatabaseManager.COMMENT, DatabaseManager.MOOD};
@@ -180,20 +206,13 @@ public class HistoryActivity extends AppCompatActivity {
 //            myList.setAdapter(myCursorAdapter);
 
 
-
-
-
-        }
-    }
-
-
-        //   private void commentOrNot (String [] fromTheDb) {
+//   private void commentOrNot (String [] fromTheDb) {
 //        if (fromTheDb != null) {
 //            fromTheDb = new String[] {DatabaseManager.COMMENT , DatabaseManager.MOOD}
 //        } else {
 //            fromTheDb = new String[] {DatabaseManager.COMMENT , DatabaseManager.MOOD};
 
-        //       }
+//       }
 
 //    //switch pour définir les couleurs et la taille du layout selon le mood
 //        private void displayMood(Mood mood, RelativeLayout layout) {

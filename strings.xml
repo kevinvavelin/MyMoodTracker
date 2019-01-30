@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Mood Tracker</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="a_week_ago">Il y a 1 semaine</string>
+    <string name="six_days_ago">Il y a six jours</string>
+    <string name="five_days_ago">Il y a cinq jours</string>
+    <string name="four_days_ago">Il y a quatre jours</string>
+    <string name="three_days_ago">Il y a trois jours</string>
+    <string name="two_days_ago">Avant-hier</string>
+    <string name="yesterday">Hier</string>
+    <string name="aujourdhui">Aujourd hui</string>
+    <string name="il_y_a">Il y a </string>
+    <string name="jours">jours</string>
+    <string name="il_y_a_plusieurs_jours">Il y a %1$o jours</string>
+
+
+</resources>

@@ -6,7 +6,7 @@ public class MoodData {
     private int ID_;
     public int MOOD;
     public String COMMENT;
-    private String WHEN_;
+    public String WHEN_;
 
     public MoodData(int ID_, int MOOD, String COMMENT, String WHEN_) {
         this.setId_(ID_);

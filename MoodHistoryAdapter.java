@@ -4,6 +4,7 @@ package com.example.android.moodtracker;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public final class MoodHistoryAdapter extends BaseAdapter {
@@ -21,7 +26,7 @@ public final class MoodHistoryAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     //   private    ArrayList<MoodData> moodDataList = ArrayList<>;
-   // private ArrayList moodDataList = new ArrayList();
+    // private ArrayList moodDataList = new ArrayList();
     private List<MoodData> listOfMoodData;
     private int screenWidth;
 
@@ -59,6 +64,10 @@ public final class MoodHistoryAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.list_items_row, parent, false);
             TextView numberOfTheDay = view.findViewById(R.id.numberOfTheDay);
             ImageButton commentIcon = view.findViewById(R.id.commentIcon);
+            TextView days_ago = view.findViewById(R.id.days_ago);
+
+            daysAgo(position, days_ago);
+
             //LinearLayout text_container = view.findViewById(R.id.text_container);
             // switch (moodDataList.get(position)) {
             switch (this.listOfMoodData.get(position).MOOD) {
@@ -67,9 +76,9 @@ public final class MoodHistoryAdapter extends BaseAdapter {
 
                 case 0: //Smiley Sad
                     view.setBackgroundResource(R.color.color_sad);
-                    numberOfTheDay.setWidth(screenWidth() / 5);
+                    numberOfTheDay.setWidth(screenWidth() / 7);
                     IconOrNot(position, commentIcon);
-                 //   commentIcon.setVisibility(View.GONE);
+                    //   commentIcon.setVisibility(View.GONE);
                     // visible or gone comment icon
                     // on clickable comment icon to open Toast with the message stored in the Database
                     // Appear text "One week ago", "6 days ago", etc...
@@ -78,30 +87,30 @@ public final class MoodHistoryAdapter extends BaseAdapter {
 
                 case 1: //Smiley Disappointed
                     view.setBackgroundResource(R.color.color_disappointed);
-                    numberOfTheDay.setWidth(screenWidth() / 4);
+                    numberOfTheDay.setWidth(screenWidth() / 5);
                     IconOrNot(position, commentIcon);
-                  //  commentIcon.setVisibility(View.GONE);
+                    //  commentIcon.setVisibility(View.GONE);
                     break;
 
                 case 2: //Smiley Normal
                     view.setBackgroundResource(R.color.color_normal);
                     numberOfTheDay.setWidth(screenWidth() / 3);
                     IconOrNot(position, commentIcon);
-                   // commentIcon.setVisibility(View.GONE);
+                    // commentIcon.setVisibility(View.GONE);
                     break;
 
                 case 3: //Smiley Happy
                     view.setBackgroundResource(R.color.color_happy);
                     numberOfTheDay.setWidth(screenWidth() / 2);
                     IconOrNot(position, commentIcon);
-                   // commentIcon.setVisibility(View.GONE);
+                    // commentIcon.setVisibility(View.GONE);
                     break;
 
                 case 4: //Smiley Super_Happy
                     view.setBackgroundResource(R.color.color_super_happy);
-                    numberOfTheDay.setWidth(screenWidth() /  1);
+                    numberOfTheDay.setWidth(screenWidth() / 1);
                     IconOrNot(position, commentIcon);
-                  //  commentIcon.setVisibility(View.VISIBLE);
+                    //  commentIcon.setVisibility(View.VISIBLE);
                     break;
 
                 default:
@@ -114,28 +123,107 @@ public final class MoodHistoryAdapter extends BaseAdapter {
         return view;
     }
 
-    private void IconOrNot(int position, ImageButton commentIcon) {
 
-       String iconOrNot = listOfMoodData.get(position).COMMENT;
+    private void daysAgo(int position, TextView days_ago) {
 
-       if ( iconOrNot != null ){
-           commentIcon.setVisibility(View.VISIBLE);
-       }
-       else {
-           commentIcon.setVisibility(View.INVISIBLE);
-       }
-    }
+        Date t = new Date();
+        Date d = new Date();
 
-    private int screenWidth() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        if (windowManager != null) {
-            windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+        String pattern = "dd-MM-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String today = simpleDateFormat.format(new Date());
 
-            screenWidth = displayMetrics.widthPixels;
+        String daysAgo = listOfMoodData.get(position).WHEN_;
+
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            d = sdf.parse(daysAgo);
+            t = sdf.parse(today);
+
+
+            Log.i("todayT", " " + t);
+            Log.i("todayD", " " + d);
+
+
+        } catch (ParseException ex) {
+
+            Log.i("exception", "Hay un problemo!");
+
         }
-        return screenWidth;
+
+        long diff = t.getTime() - d.getTime();
+        long diffInDays = TimeUnit.MILLISECONDS.toDays(diff);
+
+        int combien = (int) diffInDays;
+
+        switch (combien) {
+
+            case 0:
+                days_ago.setText(R.string.aujourdhui);
+                break;
+
+            case 1:
+                days_ago.setText(R.string.yesterday);
+                break;
+
+            case 2:
+                days_ago.setText(R.string.two_days_ago);
+                break;
+
+            case 3:
+                days_ago.setText(R.string.three_days_ago);
+                break;
+
+            case 4:
+                days_ago.setText(R.string.four_days_ago);
+                break;
+
+            case 5:
+                days_ago.setText(R.string.five_days_ago);
+                break;
+
+            case 6:
+                days_ago.setText(R.string.six_days_ago);
+                break;
+
+            case 7:
+                days_ago.setText(R.string.a_week_ago);
+                break;
+
+            default:
+
+                String message = context.getString(R.string.il_y_a_plusieurs_jours, combien);
+                days_ago.setText(message);
+                break;
+
+
+        }
+
+
+        }
+
+        private void IconOrNot ( int position, ImageButton commentIcon){
+
+            String iconOrNot = listOfMoodData.get(position).COMMENT;
+
+            if (iconOrNot != null) {
+                commentIcon.setVisibility(View.VISIBLE);
+            } else {
+                commentIcon.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        private int screenWidth () {
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            if (windowManager != null) {
+                windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+
+                screenWidth = displayMetrics.widthPixels;
+            }
+            return screenWidth;
+        }
+
+
     }
-
-
-}

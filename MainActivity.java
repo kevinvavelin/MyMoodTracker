@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         float DeltaY = e2.getY() - e1.getY();
 
         if (Math.abs(DeltaY) > DElTA_MIN) {
-            if (DeltaY > 0) {
+            if (DeltaY < 0) {
                 Log.d(TAG, "OnFling: up");
                 mCounter.setText("up");
                 moodValue = ++moodValue;
@@ -279,8 +279,14 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     private void playMedia() {
 
-         MediaPlayer mMediaPlayer = MediaPlayer.create(this, R.raw.beep);
-            mMediaPlayer.start();
+         MediaPlayer mMediaPlayer = MediaPlayer.create(this, R.raw.beep_sonore);
+
+        mMediaPlayer.start();
+
+        if(!mMediaPlayer.isPlaying())
+            mMediaPlayer.release();
+
+
 
     }
 
