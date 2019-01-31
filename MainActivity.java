@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private GestureDetector mGestureDetector;
 
     private Context context = this;
+	
+	private MediaPlayer mMediaPlayer;
 
 
 
@@ -212,12 +214,20 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     private void playMedia() {
 
-         MediaPlayer mMediaPlayer = MediaPlayer.create(this, R.raw.beep_sonore);
-
-        mMediaPlayer.start();
-
-
+        mMediaPlayer = MediaPlayer.create(this, R.raw.beep_sonore);
+		try {
+			mMediaPlayer.resume();
+			 mMediaPlayer.start();
+		}catch(Exception exception) {
+			System.Out.Println(exception.getMessage());
+		}
     }
+	
+	private void stopMedia() {
+		if(mMediaPlayer.isPlaying()) {
+			mMediaPlayer.stop();
+		}
+	}
 
     private void onUpSwipe() {
         if (moodValue == 4 ){
@@ -235,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     public void swipeCase(){
 
-
+		stopMedia();
 
         switch (moodValue){
 
