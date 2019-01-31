@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -28,19 +27,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private static final String TAG = "Main Activity";
     private final static int DElTA_MIN = 50;
 
-    int compteur = 0;
+
     private ImageView mWelcomeSmiley;
     private ImageButton mHistory;
-    private TextView mCounter;
     private ImageButton mComment;
     private RelativeLayout mRelative;
-    private int mMood;
-    private TextView mCommentForTest;
     private DatabaseManager databaseManager;
-
-    private TextView mMoodValueForTest;
-
-    private TextView commentForTest;
 
 
     public static String userInputValue;
@@ -49,10 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     String pattern = "dd-MM-yyyy";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
-      private MediaPlayer mMediaPlayer;
-   // public final MediaPlayer sound = MediaPlayer.create(this, R.raw.beep);
-
 
 
     private GestureDetector mGestureDetector;
@@ -67,38 +55,23 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // gestureDetector = new SwipeGestureDetector(this);
-
 
         mWelcomeSmiley = findViewById(R.id.welcome_smiley);
-        mCounter = findViewById(R.id.counter);
         mHistory = findViewById(R.id.history);
         mComment = findViewById(R.id.comment);
         mRelative = findViewById(R.id.relative);
 
 
-
-
-        //Findview for test
-//        mCommentForTest = (TextView) findViewById(R.id.commentForTest);
-//        mMoodValueForTest = findViewById(R.id.moodValueForText);
-
-        //mHistory.setOnTouchListener(this);
         mGestureDetector = new GestureDetector(this, this);
 
-        //mComment.setOnTouchListener(this);
+
         mWelcomeSmiley.setOnTouchListener(this);
 
 
         mWelcomeSmiley.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // compteur = ++compteur;
-                // mCounter.setText(Integer.toString(compteur));
-                // System.out.println(compteur);
-
-
-            }
+                           }
         });
 
 
@@ -108,25 +81,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             @Override
             public void onClick(View v) {
 
-
-     //           String today = simpleDateFormat.format(new Date());
-
-
-//                View view = LayoutInflater.from(getApplication()).inflate(R.layout.activity_history, null);
-//                mMoodValueForTest =  view.findViewById(R.id.moodValueForText);
-
- //               databaseManager.insertMood (moodValue, userInputValue, today);
-
-//                List<MoodData> moodDataList = databaseManager.readTop7();
-//                for (MoodData moodData : moodDataList) {
-//                    mMoodValueForTest.append(moodData.toString() + "\n");
-//                }
-//                databaseManager.close();
-
-
                 Intent historyActivityIntent = new Intent(MainActivity.this, HistoryActivity.class);
                 startActivity(historyActivityIntent);
-
 
             }
         });
@@ -140,8 +96,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
             @Override
             public void onClick(View v) {
-
- //               mMoodValueForTest = findViewById(R.id.moodValueForText);
 
 
                 final AlertDialog.Builder inputAlert = new AlertDialog.Builder(context);
@@ -157,23 +111,10 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
                         String today = simpleDateFormat.format(new Date());
 
-
-//                        View view = LayoutInflater.from(getApplication()).inflate(R.layout.activity_history, null);
-//                        mMoodValueForTest =  view.findViewById(R.id.moodValueForText);
-
                        databaseManager.insertMood (moodValue, userInputValue, today);
 
-//                        List<MoodData> moodDataList = databaseManager.readTop7();
-//                        for (MoodData moodData : moodDataList) {
-//                            mMoodValueForTest.append(moodData.toString() + "\n");
+                 //         Log.i("DATABASE", "insertCommand invoked");
 
-//                        }
-//                        databaseManager.close();
-
-//                     Intent historyActivityIntent = new Intent(MainActivity.this, HistoryActivity.class);
-//                       startActivity(historyActivityIntent);
-
-                          Log.i("DATABASE", "insertCommand invoked");
                     }
                 });
                 inputAlert.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
@@ -229,40 +170,32 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
 
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        Log.d(TAG, "OnFling: called");
+     //   Log.d(TAG, "OnFling: called");
 
         float DeltaY = e2.getY() - e1.getY();
 
         if (Math.abs(DeltaY) > DElTA_MIN) {
             if (DeltaY < 0) {
-                Log.d(TAG, "OnFling: up");
-                mCounter.setText("up");
+             //   Log.d(TAG, "OnFling: up");
+
                 moodValue = ++moodValue;
                 if (moodValue >= 4){
                     moodValue = 4;
                 }
-                mMood = moodValue;
-                System.out.println(mMood);
                 onUpSwipe();
                 swipeCase();
                 String today = simpleDateFormat.format(new Date());
                 databaseManager.insertMood (moodValue, userInputValue, today);
 
-
-
-
-
                 return true;
 
             } else {
-                Log.d(TAG, "OnFling: down");
-                mCounter.setText("down");
+             //   Log.d(TAG, "OnFling: down");
+
                 moodValue = --moodValue;
                 if (moodValue <= 0){
                     moodValue = 0;
                 }
-                mMood = moodValue;
-                System.out.println(mMood);
                 onDownSwipe();
                 swipeCase();
                 String today = simpleDateFormat.format(new Date());
@@ -283,28 +216,19 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         mMediaPlayer.start();
 
-        if(!mMediaPlayer.isPlaying())
-            mMediaPlayer.release();
-
-
 
     }
 
     private void onUpSwipe() {
-
-        mCounter.setText("UpSwipe");
         if (moodValue == 4 ){
-            Toast.makeText(this, "You cannot be more Happy than That !", Toast.LENGTH_SHORT).show();
-            return;
+            Toast.makeText(this, "You can't be Happier ! Enjoy !", Toast.LENGTH_SHORT).show();
         }
 
     }
 
     private void onDownSwipe() {
-        mCounter.setText("DownSwipe");
         if (moodValue == 0 ){
-            Toast.makeText(this, "You cannot be more Disappointed !", Toast.LENGTH_SHORT).show();
-            return;
+            Toast.makeText(this, "You can't be Sadder, Things will be better Soon !", Toast.LENGTH_SHORT).show();
         }
 
     }

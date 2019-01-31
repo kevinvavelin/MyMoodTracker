@@ -26,31 +26,15 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
 
 
-
-
-//    public static final String TABLE_T_MOOD = "T_mood";
-//    public static final String ROW_ID = "_id";
-//    public static final String COMMENT = "comment";
-//    public static final String MOOD = "mood";
-//    public static final String WHEN_ = "when_";
-//
-//    private static final String CREATE_TABLE = "CREATE TABLE "
-//            + TABLE_T_MOOD + "(" + ROW_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + MOOD
-//            + " INTEGER NOT NULL," + COMMENT + " TEXT," + WHEN_
-//            + " TEXT NOT NULL" + ")";
-
-
     public DatabaseManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
-
 
     }
 
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-  //      db.execSQL(CREATE_TABLE);
+
 
         // CREATION OF THE TABLE T_MOOD with 4 Columns - Comment can be null
         String strSql = "CREATE TABLE T_mood ("
@@ -85,9 +69,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         String todayIsToday = todayIsToday();
 
 
-        boolean result;
+        //boolean result;
         // If result is true, it means that the date already exists and the update of the row id launched, if not, just insert the data
-        if (result = today.equals(todayIsToday)) {
+        if (today.equals(todayIsToday)) {
 
             // Method includes moodValue and userInputValue, while today is the date
                updateRow(moodValue, userInputValue, today);
@@ -110,11 +94,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         List<MoodData> moodDataList = new ArrayList<>();
 
         //Request SQL
-         //   String strSql = "select * from T_mood order by _id desc limit 7";
-         //   String strSql = "select * from T_mood order by _id desc limit 7 offset 1";
 
-        //  String strSql = "select * from (select * from T_mood order by _id desc limit 7 offset 1) as strSql order by _id asc";
-        String strSql = "select * from (select * from T_mood order by _id desc limit 7) as strSql order by _id asc";
+          String strSql = "select * from (select * from T_mood order by _id desc limit 7 offset 1) as strSql order by _id asc";
+        //String strSql = "select * from (select * from T_mood order by _id desc limit 7) as strSql order by _id asc";
 
 
         // Creation of a Cursor called cursor. It will read in the database according to the SQL request strSql - rawquery
@@ -162,24 +144,5 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return true;
     }
 
-//    public Cursor fetchAllMoods() {
-//
-//        Cursor mCursor = this.getReadableDatabase().query("T_mood", new String[] {"mood", "comment"},
-//                null, null, null, null, null);
-//        if (mCursor != null) {
-//            mCursor.moveToFirst();
-//        }
-//        return mCursor;
-//
-//}
 
-    public Cursor getMoodComment(){
-
-       Cursor c = this.getReadableDatabase().query( "T_mood", new String[]{"_id", "mood","comment"}, null, null, null, null, "_id" + " DESC" , "7" );
-        if (c != null) {
-            c.moveToFirst();
-        }
-
-        return c;
-    }
 }

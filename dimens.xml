@@ -1,12 +1,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
 
-    <dimen name="dimension_super_Happy">380sp</dimen>
-    <dimen name="dimension_happy">320sp</dimen>
-    <dimen name="dimension_normal">260sp</dimen>
-    <dimen name="dimension_disappointed">180sp</dimen>
-    <dimen name="dimension_sad">100sp</dimen>
-
     <dimen name="minimum_width">80dp</dimen>
 
 </resources>

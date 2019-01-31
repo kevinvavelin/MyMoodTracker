@@ -25,8 +25,6 @@ public final class MoodHistoryAdapter extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater;
-    //   private    ArrayList<MoodData> moodDataList = ArrayList<>;
-    // private ArrayList moodDataList = new ArrayList();
     private List<MoodData> listOfMoodData;
     private int screenWidth;
 
@@ -68,49 +66,38 @@ public final class MoodHistoryAdapter extends BaseAdapter {
 
             daysAgo(position, days_ago);
 
-            //LinearLayout text_container = view.findViewById(R.id.text_container);
-            // switch (moodDataList.get(position)) {
+
             switch (this.listOfMoodData.get(position).MOOD) {
-                //   case 0: //Smiley Sad
-//            switch (position) {
+
 
                 case 0: //Smiley Sad
                     view.setBackgroundResource(R.color.color_sad);
                     numberOfTheDay.setWidth(screenWidth() / 7);
                     IconOrNot(position, commentIcon);
-                    //   commentIcon.setVisibility(View.GONE);
-                    // visible or gone comment icon
-                    // on clickable comment icon to open Toast with the message stored in the Database
-                    // Appear text "One week ago", "6 days ago", etc...
-
                     break;
 
                 case 1: //Smiley Disappointed
                     view.setBackgroundResource(R.color.color_disappointed);
                     numberOfTheDay.setWidth(screenWidth() / 5);
                     IconOrNot(position, commentIcon);
-                    //  commentIcon.setVisibility(View.GONE);
                     break;
 
                 case 2: //Smiley Normal
                     view.setBackgroundResource(R.color.color_normal);
                     numberOfTheDay.setWidth(screenWidth() / 3);
                     IconOrNot(position, commentIcon);
-                    // commentIcon.setVisibility(View.GONE);
                     break;
 
                 case 3: //Smiley Happy
                     view.setBackgroundResource(R.color.color_happy);
                     numberOfTheDay.setWidth(screenWidth() / 2);
                     IconOrNot(position, commentIcon);
-                    // commentIcon.setVisibility(View.GONE);
                     break;
 
                 case 4: //Smiley Super_Happy
                     view.setBackgroundResource(R.color.color_super_happy);
                     numberOfTheDay.setWidth(screenWidth() / 1);
                     IconOrNot(position, commentIcon);
-                    //  commentIcon.setVisibility(View.VISIBLE);
                     break;
 
                 default:
@@ -141,9 +128,8 @@ public final class MoodHistoryAdapter extends BaseAdapter {
             d = sdf.parse(daysAgo);
             t = sdf.parse(today);
 
-
-            Log.i("todayT", " " + t);
-            Log.i("todayD", " " + d);
+//            Log.i("todayT", " " + t);
+//            Log.i("todayD", " " + d);
 
 
         } catch (ParseException ex) {
@@ -192,11 +178,9 @@ public final class MoodHistoryAdapter extends BaseAdapter {
                 break;
 
             default:
-
                 String message = context.getString(R.string.il_y_a_plusieurs_jours, combien);
                 days_ago.setText(message);
                 break;
-
 
         }
 
