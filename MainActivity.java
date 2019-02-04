@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     private void playMedia() {
 
-         MediaPlayer mMediaPlayer = MediaPlayer.create(this, R.raw.beep_sonore);
+        MediaPlayer mMediaPlayer = MediaPlayer.create(this, R.raw.beep_sonore);
 
         mMediaPlayer.start();
 

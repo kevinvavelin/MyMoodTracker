@@ -42,16 +42,19 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Log.i("clic", "click sur Icon " + position + " " +id );
+                Log.i("clic", "click sur Icon " + position + " " + id);
 
-               String iconOrNot = moodDataList.get(position).COMMENT;
-         //       Log.i("datas", "" + iconOrNot );
-               if (iconOrNot != null) {
+                String iconOrNot = moodDataList.get(position).COMMENT;
+                //       Log.i("datas", "" + iconOrNot );
+                if (iconOrNot != null) {
                     Toast.makeText(HistoryActivity.this, " " + iconOrNot, Toast.LENGTH_SHORT).show();
-               } else {
+                } else {
                 }
             }
-        });}
+        });
 
-        }
+
+    }
+
+}
 
