@@ -94,6 +94,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
         List<MoodData> moodDataList = new ArrayList<>();
 
         //Request SQL
+        
+//         String pattern = "dd-MM-yyyy";
+//         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+//         // today is the date of the day, todayisToday is the result of the boolean method todayIsToday - see below
+//         today = simpleDateFormat.format(new Date());
+        
+        // todayDateDelta => new Date().day - T_mood.date.day doit retourner un nombre <= 7
+        // todayDateDelta => new Date().day(-7)
+        
+        // select * from T_mood where T_mood.date <= todayDateDelta
 
           String strSql = "select * from (select * from T_mood order by _id desc limit 7 offset 1) as strSql order by _id asc";
         //String strSql = "select * from (select * from T_mood order by _id desc limit 7) as strSql order by _id asc";
